@@ -1,0 +1,16 @@
+# Haskell build artifacts
+*.hi
+*.o
+*.info
+
+# Executables
+TestTinyPlus
+
+# Parser & Lexer generated files
+LexTinyPlus.hs
+ParTinyPlus.hs
+SkelTinyPlus.hs
+
+# Build directories
+dist/
+.stack-work/
