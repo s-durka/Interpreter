@@ -12,15 +12,18 @@ TestTinyPlus
 Interpret
 
 # Parser & Lexer generated files
-LexTinyPlus.hs
-ParTinyPlus.hs
-SkelTinyPlus.hs
-AbsTinyPlus.hs
-ErrM.hs
-PrintTinyPlus.hs
-TestTinyPlus.hs
-DocTinyPlus.txt
+Lex*
+Par*
+Skel*
+Abs*
+ErrM*
+Print*
+Test*
+Doc*
 
 # Build directories
 dist/
 .stack-work/
+
+
+.DS_Store
