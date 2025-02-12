@@ -2,14 +2,24 @@
 *.hi
 *.o
 *.info
+*.x
+*.y
+
+Makefile
 
 # Executables
 TestTinyPlus
+Interpret
 
 # Parser & Lexer generated files
 LexTinyPlus.hs
 ParTinyPlus.hs
 SkelTinyPlus.hs
+AbsTinyPlus.hs
+ErrM.hs
+PrintTinyPlus.hs
+TestTinyPlus.hs
+DocTinyPlus.txt
 
 # Build directories
 dist/
