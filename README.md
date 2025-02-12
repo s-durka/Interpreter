@@ -1,64 +1,92 @@
-setup:
-# install GHC using ghcup:
-`curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh`
-# install the needed tools:
+# Imperative Language TinyPlus  
+
+## Setup
+
+### Install GHC using `ghcup`:
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+```
+
+### Install the needed tools:
+```sh
 cabal install alex happy BNFC
+```
 
---------------------------------------------- 
-        ./build.sh
-        ./Interpret <nazwa-pliku>
-----------------------------------------------
+## Build and Run
+```sh
+./build.sh
+./Interpret <filename>
+```
 
-Imperative language
+---
 
-Language description:
+## Language Description
 
-A language with a grammar similar to that of the Tiny BASIC language,
-but with extended functionalities
+An imperative language with a grammar similar to C and the [Tiny BASIC](https://en.wikipedia.org/wiki/Tiny_BASIC) language with modifications including:
 
-> forced curly braces for if, else, while
-e.g.
+- **Division into declarations and instructions in a block**, similar to the Tiny BASIC language.
+- **Forced curly braces** for `if`, `else`, and `while` statements.
 
-if (x > 0) { 
-  x--; 
+### Example:
+```c
+if (x > 0) {
+  x--;
 } else {
   return 0;
 }
+```
 
-> no procedures or void, only functions returning int
-> (it can be easily extended to allow functions to return bool and str as well,
->  but during the task discussion, Dr. Chrząszcz said that int is sufficient)
+### Key Features:
 
-> one-dimensional arrays indexed by int 
-  > requirement to specify the size at declaration, e.g.
+- **No procedures or void functions**, only functions returning `int`.
+  - (Can be extended to allow `bool` and `str` return types, but `int` is sufficient as per Dr. Chrząszcz.)
+- **One-dimensional arrays indexed by `int`**
+  - Requires size specification at declaration.
+  
+  Example:
+  ```c
   int[n] arr;
   arr[0] = arr[f(n)] + 3;
-
-> blocks shadowing variable declarations, with declarations always at the top of the block, or without:
-
-int main [int x = 0] {
-  print x; # x == 0
-  [int x] {
-  x = 1;
-  print x; # x == 1
+  ```
+- **Block scope variable shadowing**, with optional declarations at the top of the block.
+  
+  Example:
+  ```c
+  int main [int x = 0] {
+    print x; // x == 0
+    [int x] {
+      x = 1;
+      print x; // x == 1
+    }
+    print x; // x == 0
   }
-  print x; # x == 0
-}
-
-> "return" returns a result if called in a function and recursively breaks loops and blocks
-while (i < n) {
-  i = i + 1;
-  if (i == 2) {
-  return 0; # breaks the loop
+  ```
+- **`return` statement behavior:**
+  - Returns a result in a function.
+  - Recursively breaks loops and blocks.
+  
+  Example:
+  ```c
+  while (i < n) {
+    i = i + 1;
+    if (i == 2) {
+      return 0; // Breaks the loop
+    }
   }
-}
+  ```
+- **Program structure:**
+  - A sequence of function declarations.
+  - A mandatory `main` function.
+  
+  Example:
+  ```c
+  int f(int x) {
+    return x;
+  }
+  
+  main [int z] {
+    z = 1;
+    f(z);
+  }
+  ```
 
-> programs in the form: <sequence of function declarations>, "main" block:
-> (the presence of the main function is necessary)
-int f(int x)  {
-  return x;
-}
-main [int z]{
-  z = 1;
-  f(z);
-}
