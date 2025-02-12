@@ -1,81 +1,60 @@
----------------------------------------------
-        bnfc -m TinyPlus.cf
-        make
-        ghc --make Interpret.hs
+setup:
+# install GHC using ghcup:
+`curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh`
+# install the needed tools:
+cabal install alex happy BNFC
+
+--------------------------------------------- 
+        ./build.sh
         ./Interpret <nazwa-pliku>
 ----------------------------------------------
 
-Język imperatywny na 24 pkt.
-Na 15 punktów
-  + 01 (trzy typy)
-  + 02 (literały, arytmetyka, porównania)
-  + 03 (zmienne, przypisanie)
-  + 04 (print)
-  + 05 (while, if)
-  + 06 (funkcje lub procedury, rekurencja)
-  + 07 (przez zmienną / przez wartość / in/out)
-  - 08 (zmienne read-only i pętla for) // zamiast tego 07, można wybrać jedno
-Na 20 punktów
-  + 09 (przesłanianie i statyczne wiązanie)
-  + 10 (obsługa błędów wykonania) -- dzielenie przez 0, wychodzenie poza zakres tablicy...
-  + 11 (funkcje zwracające wartość)
-Na 30 punktów
-  + 12 (4) (statyczne typowanie)
-  + 13 (2) (funkcje zagnieżdżone ze statycznym wiązaniem)
-  + 14 (1) (tablice)
-  - 15 (2) (krotki z przypisaniem)
-  - 16 (1) (break, continue) <---- (return działa jak break)
-  - 17 (4) (funkcje wyższego rzędu, anonimowe, domknięcia)
-  - 18 (3) (generatory)
+Imperative language
 
-Razem: 27 punktów
+Language description:
 
+A language with a grammar similar to that of the Tiny BASIC language,
+but with extended functionalities
 
-Opis języka:
-
-Język o gramatyce podobnej do C,
-główną modyfikacją będącą podział na deklaracje oraz instrukcje w bloku,
-jak w języku Tiny z wykładu Semantyki
-
-> wymuszone nawiasy klamrowe dla if, else, while
-np.
+> forced curly braces for if, else, while
+e.g.
 
 if (x > 0) { 
-    x-- ; 
+  x--; 
 } else {
-    return 0;
+  return 0;
 }
 
-> brak procedur oraz void, tylko funkcje zwracające int
-> (można łatwo rozszerzyć, żeby funkcje zwracały również bool i str,
->  ale na omówieniu zadania dr. Chrząszcz powiedział, że wystarczy int)
+> no procedures or void, only functions returning int
+> (it can be easily extended to allow functions to return bool and str as well,
+>  but during the task discussion, Dr. Chrząszcz said that int is sufficient)
 
-> tablice jednowymiarowe indeksowane int 
-    > wymóg określenia rozmiaru przy deklaracji, np.
-    int[n] arr;
-    arr[0] = arr[f(n)] + 3 ;
+> one-dimensional arrays indexed by int 
+  > requirement to specify the size at declaration, e.g.
+  int[n] arr;
+  arr[0] = arr[f(n)] + 3;
 
-> bloki przysłaniające deklaracje zmiennych, z deklaracjami zawsze na górze bloku, lub bez:
+> blocks shadowing variable declarations, with declarations always at the top of the block, or without:
 
 int main [int x = 0] {
   print x; # x == 0
   [int x] {
-    x = 1;
-    print x; # x == 1
+  x = 1;
+  print x; # x == 1
   }
   print x; # x == 0
 }
 
-> "return" zwraca wynik jeśli jest wywołany w funkcji oraz rekurencyjnie przerywa pętle i bloki
+> "return" returns a result if called in a function and recursively breaks loops and blocks
 while (i < n) {
-  i = i+1;
+  i = i + 1;
   if (i == 2) {
-    return 0; # przerwie pętlę
+  return 0; # breaks the loop
   }
 }
 
-> programy postaci: <ciąg deklaracji funkcji>, blok "main":
-> (konieczna obecność funkcji main)
+> programs in the form: <sequence of function declarations>, "main" block:
+> (the presence of the main function is necessary)
 int f(int x)  {
   return x;
 }
@@ -83,4 +62,3 @@ main [int z]{
   z = 1;
   f(z);
 }
-
