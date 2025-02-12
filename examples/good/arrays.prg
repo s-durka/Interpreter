@@ -1,7 +1,7 @@
-# > funkcje zagnieżdżone ze statycznym wiązaniem
-# > tablice przekazywane przez referencję
-#   - funkcja zmienia wartości wewnątrz tablicy,
-#   - następnie w "main" wypisuje ją jeszcze raz
+# nested functions with static binding;
+# arrays passed by reference;
+#   - the function changes the values inside the array,
+#   - then in "main" it prints it again
 
 int print_arr(int arr[], int n) [int i] {
     i = 0;
