@@ -15,7 +15,7 @@ cabal install alex happy BNFC
 ## Build and Run
 ```sh
 ./build.sh
-./Interpret <filename>
+./Interpret <filename> # see examples/
 ```
 
 ---
